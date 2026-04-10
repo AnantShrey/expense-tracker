@@ -1,54 +1,37 @@
-from .expense import *
+from expense import *
+
+# Show Menu (Add expense, View expenses, Delete expense, Show summary, Exit)
+# User Input
+# Call other functions
+
+print("\nWelcome to the Expense Tracker Program by Anant Shrey, Class 12-A, DPSGV.")
+print("This program supports adding, viewing, deleting and summarising expenses.")
 
 
-print("\nWelcome to the expense tracker by Anant Shrey, Class 12-A")
-
+def run():
+    while True:
+        choices()
+        choice = get_choice()
+        
+        if choice == 1:
+            print("\nYou have chosen to Add an Expense, sorted into 5 categories (Food, Travel, Study, Entertainment, Others\n)")
+            add_expense()
+        elif choice == 2:
+            view_expenses()
+        elif choice == 3:
+            delete_expense()
+        elif choice == 4:
+            summarize()
+        else:
+            break    
+    
 
 def choices():
-    print("\n====== Expense Tracker Menu ======")
-    print("\nPress 1 to Add Expense")
-    print("Press 2 to View All Expenses")
-    print("Press 3 to View Expenses by Category")
-    print("Press 4 to Search Expense by Date")
-    print("Press 5 to Show Summary")
-    print("Press 6 to Delete an Expense")
-    print("Press 9 to Exit")
-    menu()
+    print("\nPress 1 to Add an Expense")
+    print("Press 2 to View Expenses")
+    print("Press 3 to Delete an Expense")
+    print("Press 4 to Summarize Expenses")
+    print("Press 5 to Exit")
 
 
-def menu():
-    while True:
-        try:
-            choice = int(input("\nChoice: "))
-            if choice in [1,2,3,4,5,6,9]:
-                break
-            else:
-                print("Enter a valid choice.")
-        except ValueError:
-            print("Invalid input. Please enter a number")
-    
-    rerun = True
-    if choice == 1:
-        add()
-    elif choice == 2:
-        view_all()
-    elif choice == 3:
-        view_by_category()
-    elif choice == 4:
-        search()
-    elif choice == 5:
-        summary()
-    elif choice == 6:
-        delete()
-    elif choice == 9:
-        rerun = False
-        pass
-
-    if rerun == True:
-        run_again()
-
-
-
-
-
-choices()
+run()

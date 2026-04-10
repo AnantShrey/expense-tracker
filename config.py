@@ -1,0 +1,1 @@
+# constants (date, db name, categories)

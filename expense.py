@@ -1,44 +1,63 @@
-# from .main import *
+from utils import *
+
+# Add expense
+# view expense
+# delete expense
+expenses = []
+
+def add_expense():
+    amt = get_amount()
+    category = get_category()
+    date = get_date()
+
+    expense = {'amount':amt, 'category':category, 'date':date}
+    expenses.append(expense)
 
 
-# def run_again():
-#     x = input("Do you want to restart the program: (y/n): ").lower()
-#     if x == 'y':
-#         n = input("Do you want to repeat the choices? (y/n): ").lower()
-#         if n == 'y':
-#             choices()
-# #         else:
-#             menu()
+def view_expenses():
+    if not expenses:
+        print("\nNo expenses found.")
+        return
+    
+    for i, exp in enumerate(expenses, start=1):
+        print(f"{i}. {exp['date']} | {exp['category']} | ₹{exp['amount']}")
 
 
-def get_expense_input():
+def delete_expense():
+    view_expenses()
+    
+    if not expenses:
+        return
+    
     while True:
         try:
-            amt = float(input("\nExpense amount: "))
-            break
+            index = int(input("Enter expense id number to delete: "))
+            if index >= 0 and index <= len(expenses):
+                removed = expenses.pop(index - 1)
+                print("Deleted:", removed)
+                break
+            else:
+                print("Invalid value.")
         except ValueError:
-            print("Invalid. (input was not a number)")
-    return amt
+            print("Invalid value.")
 
 
+def summarize():
+    if not expenses:
+        print("\nNo expenses to summarize")
+        return
+    
+    total = 0
+    for i in expenses:
+        total += i["amount"]
+    print(f"\nTotal spends: {total}")
 
-def add():
-    print("\nYou have chosen to add an expense.")
-    print("There are 4 expense categories (Food/Travel/Study/Other)")
+    category_total = {}
 
-    categories = ('food', 'travel', 'study', 'other')
+    for exp in expenses:
+        cat = exp["category"]
+        category_total[cat] = category_total.get(cat, 0) + exp["amount"]
 
-    amt = get_expense_input()
-
-    # while True:
-    #     ctgry = input("\nCategory: ").lower()
-    #     if ctgry in categories:
-    #         break
-    #     else:
-    #         print("Invalid category")
-
-    # while True:
-
-
-
-add()
+    print("\nSpending by category:")
+    for cat, amt in category_total.items():
+        print(f"{cat}: ₹{amt}")
