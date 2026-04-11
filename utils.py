@@ -1,5 +1,7 @@
 from datetime import datetime
 from config import *
+
+
 # validate amount
 # validate date
 # format output
@@ -34,20 +36,24 @@ def get_amount():
 def get_category():
     while True:
         x = input("Category: ").lower()
+        print()
         if x in CATEGORIES:
             break
         else:
-            print(f"Enter a valid categories. {CATEGORIES}")
+            print(f"Enter a valid categories.")
+            for i, cat in enumerate(CATEGORIES, start=1):
+                print(f"{i}. {cat}")
+            print()
     return x
 
 
 def get_date():
     while True:
-        date_str = input(f"Enter date ({DATE_FORMAT}): ")
+        date_str = input(f"Enter date in ({DATE_FORMAT}) format: ")
         
         try:
-            date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            date_obj = datetime.strptime(date_str, DATE_FORMAT)
             break
         except ValueError:
-            print("Invalid date. Please use YYYY-MM-DD format.")
+            print(f"Invalid date. Please use ({DATE_FORMAT}) format.")
     return date_str

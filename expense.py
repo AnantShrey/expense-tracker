@@ -1,63 +1,86 @@
 from utils import *
+from database import get_connection
 
 # Add expense
 # view expense
 # delete expense
-expenses = []
+
 
 def add_expense():
     amt = get_amount()
     category = get_category()
     date = get_date()
 
-    expense = {'amount':amt, 'category':category, 'date':date}
-    expenses.append(expense)
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO expenses (amount, category, date) VALUES (%s, %s, %s)"
+    values = (amt, category, date)
+
+    cursor.execute(query, values)
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    print("Expense added successfully!")
 
 
 def view_expenses():
-    if not expenses:
-        print("\nNo expenses found.")
-        return
-    
-    for i, exp in enumerate(expenses, start=1):
-        print(f"{i}. {exp['date']} | {exp['category']} | ₹{exp['amount']}")
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM expenses")
+    records = cursor.fetchall()
+
+    for row in records:
+        print(row)
+
+    cursor.close()
+    conn.close()
 
 
 def delete_expense():
     view_expenses()
-    
-    if not expenses:
+
+    try:
+        expense_id = int(input("Enter Expense ID to delete: "))
+    except ValueError:
+        print("Invalid ID. Please enter a number.")
         return
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "DELETE FROM expenses WHERE id = %s"
+    cursor.execute(query, (expense_id,))
+    conn.commit()
+
+    if cursor.rowcount == 0:
+        print("No expense found with that ID.")
+    else:
+        print("Expense deleted successfully.")
+
+    cursor.close()
+    conn.close()
+
+
+# def summarize():
+#     if not expenses:
+#         print("\nNo expenses to summarize")
+#         return
     
-    while True:
-        try:
-            index = int(input("Enter expense id number to delete: "))
-            if index >= 0 and index <= len(expenses):
-                removed = expenses.pop(index - 1)
-                print("Deleted:", removed)
-                break
-            else:
-                print("Invalid value.")
-        except ValueError:
-            print("Invalid value.")
+#     total = 0
+#     for i in expenses:
+#         total += i["amount"]
+#     print(f"\nTotal spends: {total}")
 
+#     category_total = {}
 
-def summarize():
-    if not expenses:
-        print("\nNo expenses to summarize")
-        return
-    
-    total = 0
-    for i in expenses:
-        total += i["amount"]
-    print(f"\nTotal spends: {total}")
+#     for exp in expenses:
+#         cat = exp["category"]
+#         category_total[cat] = category_total.get(cat, 0) + exp["amount"]
 
-    category_total = {}
-
-    for exp in expenses:
-        cat = exp["category"]
-        category_total[cat] = category_total.get(cat, 0) + exp["amount"]
-
-    print("\nSpending by category:")
-    for cat, amt in category_total.items():
-        print(f"{cat}: ₹{amt}")
+#     print("\nSpending by category:")
+#     for cat, amt in category_total.items():
+#         print(f"{cat}: ₹{amt}")

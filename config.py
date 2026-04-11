@@ -1,10 +1,11 @@
 # constants (date, db name, categories)
 
-
-DB_HOST = "localhost"
-DB_USER = "root"
-DB_PASSWORD = "root1234"
-DB_NAME = "expense_tracker"
+DB_CONFIG = {
+    "host":"localhost",
+    "user":"root",
+    "password":"root1234",
+    "database":"expenses_tracker"
+}
 
 DATE_FORMAT = "%Y-%m-%d"
 

@@ -14,14 +14,17 @@ def run():
         choice = get_choice()
         
         if choice == 1:
-            print(f"\nYou have chosen to Add an Expense, sorted into 5 categories {CATEGORIES}\n")
+            print(f"\nYou have chosen to Add an Expense, sorted into 5 categories.\n")
+            for i, cat in enumerate(CATEGORIES, start=1):
+                print(f"{i}. {cat}")
+            print()
             add_expense()
         elif choice == 2:
             view_expenses()
         elif choice == 3:
             delete_expense()
-        elif choice == 4:
-            summarize()
+        # elif choice == 4:
+        #     summarize()
         else:
             break    
     
