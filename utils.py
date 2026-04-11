@@ -1,12 +1,11 @@
 from datetime import datetime
-
+from config import *
 # validate amount
 # validate date
 # format output
 
 
 def get_choice():
-    t1 = (1,2,3,4,5)
     while True:
         try:
             choice = int(input("\nChoice: "))
@@ -33,19 +32,18 @@ def get_amount():
 
 
 def get_category():
-    categories = ("food","travel","study","entertainment","others")
     while True:
         x = input("Category: ").lower()
-        if x in categories:
+        if x in CATEGORIES:
             break
         else:
-            print("Enter a valid categories. (Food, Travel, Study, Entertainment, Others)")
+            print(f"Enter a valid categories. {CATEGORIES}")
     return x
 
 
 def get_date():
     while True:
-        date_str = input("Enter date (YYYY-MM-DD): ")
+        date_str = input(f"Enter date ({DATE_FORMAT}): ")
         
         try:
             date_obj = datetime.strptime(date_str, "%Y-%m-%d")

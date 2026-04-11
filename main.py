@@ -14,7 +14,7 @@ def run():
         choice = get_choice()
         
         if choice == 1:
-            print("\nYou have chosen to Add an Expense, sorted into 5 categories (Food, Travel, Study, Entertainment, Others\n)")
+            print(f"\nYou have chosen to Add an Expense, sorted into 5 categories {CATEGORIES}\n")
             add_expense()
         elif choice == 2:
             view_expenses()
